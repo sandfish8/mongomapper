@@ -9,7 +9,7 @@ module MongoMapper
         alias :proxy_respond_to? :respond_to?
         alias :proxy_extend :extend
 
-        instance_methods.each { |m| undef_method m unless m =~ /(^__|^nil\?$|^send$|proxy_|^object_id$)/ }
+        instance_methods.each { |m| undef_method m unless m =~ /(^__|^nil\?$|^send$|proxy_|^respond_to_missing\?$|^object_id$)/ }
 
         attr_reader :proxy_owner, :association, :target
 
@@ -113,7 +113,7 @@ module MongoMapper
           def load_target
             unless loaded?
               if @target.is_a?(Array) && @target.any?
-                @target = find_target + @target.find_all { |record| record.new? }
+                @target = find_target + @target.find_all { |record| !record.persisted? }
               else
                 @target = find_target
               end

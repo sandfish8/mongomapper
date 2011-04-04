@@ -8,6 +8,7 @@ module MongoMapper
       include ::ActiveModel::AttributeMethods
 
       included do
+        extend ActiveSupport::DescendantsTracker
         # atribute_method_suffix('', '=', '?')
         key :_id, ObjectId
       end
