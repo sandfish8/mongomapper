@@ -36,9 +36,7 @@ module MongoMapper
 
         protected
           def find_target
-            puts 'in find target'
             return nil if proxy_owner[association.foreign_key].nil?
-            puts klass.collection.name.inspect, proxy_owner[association.foreign_key].inspect, klass.find_by_id(proxy_owner[association.foreign_key]).inspect
             klass.find_by_id(proxy_owner[association.foreign_key])
           end
 
