@@ -9,6 +9,10 @@ module MongoMapper
           id.to_s if persisted?
         end
 
+        def to_key
+          persisted? ? [id.to_s] : nil
+        end
+
         def to_model
           self
         end
@@ -19,6 +23,10 @@ module MongoMapper
 
         def new_record?
           new?
+        end
+
+        def persisted?
+          !(new_record? || destroyed?)
         end
 
         def read_attribute(name)
